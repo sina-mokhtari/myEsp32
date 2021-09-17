@@ -471,7 +471,7 @@ void loop()
   switch (state)
   {
   case MONITORING:
-    monitor();
+    monitor(); 
     break;
   case AP_ON:
     handleAP();
