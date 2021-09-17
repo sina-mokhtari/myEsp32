@@ -31,7 +31,8 @@ enum stateTypes
   AP_ON,
   TURNING_AP_OFF,
   PRESSING_BUTTON_ON_MONITOR,
-  PRESSING_BUTTON_ON_AP
+  PRESSING_BUTTON_ON_AP,
+  DEBUG
 };
 
 volatile stateTypes state = MONITORING;
@@ -167,7 +168,8 @@ void monitor()
       if (!file.println(tmpStr))
       {
         Serial.println("File write failed!");
-        while (1);
+        while (1)
+          ;
       }
 
       file.close();
@@ -181,14 +183,13 @@ void monitor()
       sumV = 0;
     }
   }
-/*
+  /*
   usedBytes = SPIFFS.usedBytes();
 
   Serial.println("Remaining space: ");
   Serial.print(totalBytes - usedBytes);
   Serial.println(" byte");
 */
- 
 }
 
 void handleAP()
@@ -478,7 +479,21 @@ void loop()
   case TURNING_AP_OFF:
     turnOffAP();
     break;
+    case DEBUG:
+
+    break;
   default:
     break;
+  }
+
+  if (Serial.available())
+  {
+    String serialCmd = Serial.readStringUntil('\n');
+    if (serialCmd.equals("PAYANAK_LISTENING"))
+    {
+      state = DEBUG;
+      Serial.println("65849173");
+      Serial.println("DeviceName");
+    }
   }
 }
