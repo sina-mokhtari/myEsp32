@@ -19,7 +19,7 @@ String header, // Variable to store the HTTP request
     currentLine;
 
 volatile bool turnOnAP = false;
-
+ 
 // Set web server port number to 80
 WiFiServer server(80);
 
